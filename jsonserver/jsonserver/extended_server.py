@@ -48,7 +48,7 @@ class ExtendedServer(CommandServer):
             except Exception as e:
                 reply = await self.dispatch('error', ctx, e)
                 if reply:
-                    writer.send_message(reply)
+                    await writer.send_message(reply)
 
     async def handle_message(self, ctx, message):
         """similar to the command server, but with context and expands the arguments"""
@@ -67,4 +67,4 @@ class ExtendedServer(CommandServer):
         if result is None:
             result = self.default_response
 
-        ctx.writer.send_message(result)
+        await ctx.writer.send_message(result)

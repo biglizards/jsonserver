@@ -34,7 +34,7 @@ class JSONWriter:
     def __init__(self, writer):
         self._writer = writer
 
-    def send_message(self, message):
+    async def send_message(self, message):
         """encode the message, first sending its size (two bytes), then the real message"""
         if message is None:
             return
