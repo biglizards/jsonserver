@@ -22,6 +22,7 @@ class ExtendedServer(CommandServer):
         self.default_response = kwargs.get('default_response', None)
         self.writer_obj = kwargs.get('writer_obj', JSONWriter)
         self.context_obj = kwargs.get('context_obj', Context)
+        self.connection_error = ConnectionError
 
     def command(self, func):
         if not asyncio.iscoroutinefunction(func):
@@ -42,7 +43,7 @@ class ExtendedServer(CommandServer):
                 print("MESSAGE:", message)
                 ctx = self.context_obj(self, writer, message)
                 await self.dispatch('message', ctx, message)
-            except ConnectionError as e:
+            except self.connection_error as e:
                 await self.dispatch('disconnect', ctx, e)
                 break
             except Exception as e:
