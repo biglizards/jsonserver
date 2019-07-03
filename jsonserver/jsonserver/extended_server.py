@@ -40,7 +40,6 @@ class ExtendedServer(CommandServer):
             ctx = self.context_obj(self, writer)  # for on_error/dc in case get_new_message fails
             try:
                 message = await reader.get_new_message()
-                print("MESSAGE:", message)
                 ctx = self.context_obj(self, writer, message)
                 await self.dispatch('message', ctx, message)
             except self.connection_error as e:
